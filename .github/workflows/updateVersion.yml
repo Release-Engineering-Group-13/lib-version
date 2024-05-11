@@ -2,8 +2,6 @@ name: Update Version
 
 on:
     push:
-        branches:
-            - '**'
         tags:
             - 'v*'
 
@@ -40,6 +38,7 @@ jobs:
 
     pypi-publish:
       name: Upload release to PyPI
+      needs: update-version # This job must run after the update-version job
       runs-on: ubuntu-latest
       environment:
         name: pypi
