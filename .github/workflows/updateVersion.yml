@@ -21,7 +21,6 @@ jobs:
               run: |
                 git config --global user.email "action@github.com"
                 git config --global user.name "GitHub Action"
-                git remote set-url origin https://x-access-token:${{ secrets.PAT }}@github.com/${{ github.repository }}
 
             - name: Identify branch
               id: vars
@@ -37,9 +36,14 @@ jobs:
                 # # remove tag
                 git tag -d "${GITHUB_REF#refs/tags/}"
                 git push origin :refs/tags/"${GITHUB_REF#refs/tags/}"
-                git tag "${GITHUB_REF#refs/tags/}"
-                # This pushes the commit back to the same branch that triggered the action
-                git push origin "${GITHUB_REF#refs/tags/}"
+                # git tag "${GITHUB_REF#refs/tags/}"
+                # # This pushes the commit back to the same branch that triggered the action
+                # git push origin "${GITHUB_REF#refs/tags/}"
+
+            - uses: actions/checkout@v4
+              with:
+                ref: ${{ steps.vars.outputs.branch }}
+                token: ${{ secrets.PAT }}
 
 
 
