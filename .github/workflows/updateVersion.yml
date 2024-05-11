@@ -8,10 +8,8 @@ on:
 jobs:
     update-version:
         runs-on: ubuntu-latest
-        # permissions:                # Job-level permissions configuration starts here
-        #     contents: write           # 'write' access to repository contents
-        #     id-token: write           # 'write' access to the workflow run
-        permissions: write-all
+        permissions:                # Job-level permissions configuration starts here
+            contents: write           # 'write' access to repository contents
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
@@ -35,10 +33,10 @@ jobs:
               run: |
                 git add VERSION
                 git commit -m "Update version file"
-                # remove tag
-                git tag -d "${GITHUB_REF#refs/tags/}"
-                git push origin :refs/tags/"${GITHUB_REF#refs/tags/}"
-                git tag "${GITHUB_REF#refs/tags/}"
+                # # remove tag
+                # git tag -d "${GITHUB_REF#refs/tags/}"
+                # git push origin :refs/tags/"${GITHUB_REF#refs/tags/}"
+                # git tag "${GITHUB_REF#refs/tags/}"
                 # This pushes the commit back to the same branch that triggered the action
                 git push origin HEAD:${{ steps.vars.outputs.branch }}
 
