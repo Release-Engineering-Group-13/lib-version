@@ -1,0 +1,40 @@
+name: Update Version
+
+on:
+    push:
+        tags:
+            - 'v*'
+
+jobs:
+    update-version:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+
+            - name: Update version file
+              run: echo "${GITHUB_REF#refs/tags/}" > VERSION
+
+            - name: Commit and push if changed
+              run: |
+                git config --global user.email "action@github.com"
+                git config --global user.name "GitHub Action"
+                git add VERSION
+                git commit -m "Update version file"
+                git push 
+
+    pypi-publish:
+      name: Upload release to PyPI
+      runs-on: ubuntu-latest
+      environment:
+        name: pypi
+        url: https://pypi.org/p/lib-version
+      permissions:
+        id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+      steps:
+      # retrieve your distributions here 
+      - name: Checkout code
+        uses: actions/checkout@v2
+  
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
