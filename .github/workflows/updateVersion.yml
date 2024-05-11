@@ -49,6 +49,7 @@ jobs:
       # retrieve your distributions here 
       - name: Checkout code
         uses: actions/checkout@v2
-  
+      - name: Create dist folder
+        run: python setup.py sdist
       - name: Publish package distributions to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
