@@ -13,7 +13,7 @@ with codecs.open(os.path.join(here, "README.md"), encoding="utf-8") as fh:
     long_description = "\\n" + fh.read()
 
 setup(
-name='lib-version',
+name='REMLA-Test-Lib-version',
 version=version,
 author='Nick Dubbeldam',
 author_email='nick.dubbeldasm@live.nl',
