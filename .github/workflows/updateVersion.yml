@@ -10,6 +10,7 @@ jobs:
         runs-on: ubuntu-latest
         permissions:                # Job-level permissions configuration starts here
             contents: write           # 'write' access to repository contents
+            id-token: write           # 'write' access to the workflow run
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
