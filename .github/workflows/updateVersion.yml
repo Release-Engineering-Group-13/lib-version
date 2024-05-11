@@ -2,6 +2,8 @@ name: Update Version
 
 on:
     push:
+        branches:
+            - '**'
         tags:
             - 'v*'
 
@@ -11,17 +13,28 @@ jobs:
         steps:
             - name: Checkout code
               uses: actions/checkout@v2
+              with:
+                # This fetches all history for all tags and branches, necessary for the next step
+                fetch-depth: 0
+
+            - name: Setup Git
+              run: |
+                git config --global user.email "action@github.com"
+                git config --global user.name "GitHub Action"
+
+            - name: Identify branch
+              id: vars
+              run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
 
             - name: Update version file
               run: echo "${GITHUB_REF#refs/tags/}" > VERSION
 
             - name: Commit and push if changed
               run: |
-                git config --global user.email "action@github.com"
-                git config --global user.name "GitHub Action"
                 git add VERSION
                 git commit -m "Update version file"
-                git push 
+                # This pushes the commit back to the same branch that triggered the action
+                git push origin HEAD:${{ steps.vars.outputs.branch }}
 
     pypi-publish:
       name: Upload release to PyPI
