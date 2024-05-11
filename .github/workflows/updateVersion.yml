@@ -28,19 +28,16 @@ jobs:
 
             - name: Update version file
               run: echo "${GITHUB_REF#refs/tags/}" > VERSION
+                   echo "${GITHUB_REF#refs/tags/}"
+                   ls
 
             - name: Commit and push if changed
               run: |
                 git add VERSION
                 git commit -m "Update version file"
-                # # remove tag
-                # git tag -d "${GITHUB_REF#refs/tags/}"
-                # git push origin :refs/tags/"${GITHUB_REF#refs/tags/}"
-                # git tag "${GITHUB_REF#refs/tags/}"
-                # # This pushes the commit back to the same branch that triggered the action
-                # git push origin "${GITHUB_REF#refs/tags/}"
-
-            - uses: actions/checkout@v4
+               
+            - name: Push changes
+              uses: actions/checkout@v4
               with:
                 ref: ${{ steps.vars.outputs.branch }}
                 token: ${{ secrets.PAT }}
