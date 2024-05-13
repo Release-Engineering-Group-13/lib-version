@@ -14,7 +14,7 @@ LIB-VERSION is a version-aware library designed to provide robust version manage
 
 - Git (for versioning)
 - Python 3.x (if using Python)
-- Access to a package registry (e.g., PyPI, npm)
+- Access to a package registry pip
 
 ### Installation
 
