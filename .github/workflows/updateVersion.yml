@@ -58,6 +58,11 @@ jobs:
       # retrieve your distributions here 
       - name: Checkout code
         uses: actions/checkout@v2
+      - name: Update version file
+        run: |
+             echo "${GITHUB_REF#refs/tags/}" > VERSION
+             echo "${GITHUB_REF#refs/tags/}"
+             ls
       - name: Create dist folder
         run: python setup.py sdist
       - name: Publish package distributions to PyPI
