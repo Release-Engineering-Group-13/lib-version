@@ -34,7 +34,7 @@ jobs:
 
             - name: Commit and push if changed
               run: |
-                git add VERSION
+                git add src/VERSION
                 git commit -m "Update version file"
                 git push
 
@@ -54,7 +54,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Update version file
         run: |
-             echo "${GITHUB_REF#refs/tags/}" > VERSION
+             echo "${GITHUB_REF#refs/tags/}" > src/VERSION
              echo "${GITHUB_REF#refs/tags/}"
              ls
       - name: Create dist folder
