@@ -36,7 +36,7 @@ jobs:
               run: |
                 git add src/VERSION
                 git commit -m "Update version file"
-                git push origin HEAD:Devop
+                git push https://${{ secrets.PAT }}@github.com/${{ github.repository }} HEAD:Devop
 
 
     pypi-publish:
