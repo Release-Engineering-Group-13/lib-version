@@ -27,7 +27,8 @@ jobs:
               run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
 
             - name: Update version file
-              run: echo "${GITHUB_REF#refs/tags/}" > VERSION
+              run: |
+                   echo "${GITHUB_REF#refs/tags/}" > VERSION
                    echo "${GITHUB_REF#refs/tags/}"
                    ls
 

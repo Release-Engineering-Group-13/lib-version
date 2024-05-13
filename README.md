@@ -21,10 +21,9 @@ LIB-VERSION is a version-aware library designed to provide robust version manage
 To install Library Name, use the following command:
 
 ```bash
-pip install lib-version
+pip install REMLA-Test-Lib-version
 ```
 
-Replace pip with the package manager relevant to your programming language or environment.
 
 ### Usage
 To retrieve the current version of the library:
