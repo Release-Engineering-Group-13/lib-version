@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 # Read version from the VERSION file
-with open('VERSION', 'r') as version_file:
+with open('src/VERSION', 'r') as version_file:
     version = version_file.read().strip()
 
 import codecs
