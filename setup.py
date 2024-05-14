@@ -1,7 +1,7 @@
 from setuptools import setup, find_packages
 
 # Read version from the VERSION file
-with open('src/VERSION', 'r') as version_file:
+with open('VERSION', 'r') as version_file:
     version = version_file.read().strip()
 
 import codecs
@@ -28,4 +28,6 @@ classifiers=[
 'Operating System :: OS Independent',
 ],
 python_requires='>=3.6',
+package_data={'': ['VERSION']},
+include_package_data=True,
 )
