@@ -9,5 +9,5 @@ class VersionUtil:
             return version_file.read().strip()    
     
 
-# Example Usage
-print(VersionUtil.get_version())
+if __name__ == "__main__":
+    print(VersionUtil.get_version())

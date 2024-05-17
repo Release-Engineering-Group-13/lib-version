@@ -29,8 +29,8 @@ pip install REMLA-Test-Lib-version
 To retrieve the current version of the library:
 
 ```python
-from version_util import VersionUtil
-print(VersionUtil.get_version())
+from REMLA_Test_Lib_version import VersionUtil
+print(VersionUtil.VersionUtil.get_version())
 ```
 
 ### How Versioning Works
