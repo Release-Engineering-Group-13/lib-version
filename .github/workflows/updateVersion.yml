@@ -1,0 +1,62 @@
+name: Update Version
+
+on:
+    push:
+        tags:
+            - 'v*'
+
+jobs:
+    update-version:
+        runs-on: ubuntu-latest
+        permissions:                # Job-level permissions configuration starts here
+            contents: write           # 'write' access to repository contents
+        steps:
+            - name: Checkout code
+              uses: actions/checkout@v2
+              with:
+                # This fetches all history for all tags and branches, necessary for the next step
+                fetch-depth: 0
+
+            - name: Setup Git
+              run: |
+                git config --global user.email "action@github.com"
+                git config --global user.name "GitHub Action"
+
+            - name: Identify branch
+              id: vars
+              run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+
+            - name: Update version file
+              run: |
+                   echo "${GITHUB_REF#refs/tags/}" > REMLA_Test_Lib_version/VERSION
+                   echo "${GITHUB_REF#refs/tags/}"
+                   ls
+
+            - name: Commit and push if changed
+              run: |
+                git add REMLA_Test_Lib_version/VERSION
+                git commit -m "Update version file"
+              # git push https://${{ secrets.PAT }}@github.com/${{ github.repository }} HEAD:Devop
+
+
+    pypi-publish:
+      name: Upload release to PyPI
+      needs: update-version # This job must run after the update-version job
+      runs-on: ubuntu-latest
+      environment:
+        name: pypi
+        url: https://pypi.org/p/REMLA-Test-Lib-version
+      permissions:
+        id-token: write  # IMPORTANT: this permission is mandatory for trusted publishing
+      steps:
+      # retrieve your distributions here 
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Update version file
+        run: |
+             echo "${GITHUB_REF#refs/tags/}" > REMLA_Test_Lib_version/VERSION
+             echo "${GITHUB_REF#refs/tags/}"
+      - name: Create dist folder
+        run: python setup.py sdist
+      - name: Publish package distributions to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
